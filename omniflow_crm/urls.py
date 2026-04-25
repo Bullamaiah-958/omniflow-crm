@@ -15,8 +15,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from dashboard.views import admin_dashboard
+
+# omniflow_crm/urls.py
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('dashboard/', admin_dashboard, name='dashboard'), # ఇక్కడ 'dashboard/' ఉండాలి
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('', admin_dashboard), # ఇది ఉంటే ఖాళీగా ఉన్నప్పుడు కూడా డాష్‌బోర్డ్ ఓపెన్ అవుతుంది
 ]

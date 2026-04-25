@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'dashboard',
+
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,7 @@ ROOT_URLCONF = 'omniflow_crm.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,10 +122,18 @@ import os
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
 
-# Render కోసం అదనపు సెట్టింగ్స్
+# Render (additional sttings for static files)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# WhiteNoise ద్వారా ఫైల్స్‌ని కంప్రెస్ చేయడానికి
+# WhiteNoise (Compressing files)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_REDIRECT_URL = 'login'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# settings.py లో Line 134-136 మార్చండి
+STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static", # os.path.join బదులు ఇది వాడండి, ఇది చాలా కరెక్ట్ గా పనిచేస్తుంది
+]
